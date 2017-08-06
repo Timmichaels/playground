@@ -1,0 +1,11 @@
+Tim Michaels
+HW#2: Pre-Processing
+
+Non-Linear Warp 
+Compared to the affine normalization, the non-linear normalization t-value is higher (affine t= 2.680; non-linear t=2.932) and the p-value is subsequently lower (affine p= .0082; non-linear p=.004). Visually (see .jpg2 in zip file), the two transformations look quite similar, although the non-linear transformation seems to have a smaller area of activation. 
+
+Experiment 1
+The dice coefficient I calculated for Experiment 1 was 0.48, which differs significantly from the 0.19. I’m not sure why that is the case although perhaps I set up the contrast incorrectly? Since the contrasts were just for landmark with responses vs. detection, I included all of the landmark (correct or incorrect) times into one stimulus timing file and compared that to detection responses. Otherwise, not sure where I went wrong in the analysis. 
+
+Experiment 2
+I choose to replicate the above experiment upon changing the smoothing from 4.0 to 3.0. This resulted in the dice coefficient decreasing to 0.47, which seems directionally appropriate since a larger kernel size should result in more overlap. However, whatever mistakes were made in analyzing the data in Experiment 1 must have been replicated in part 2 as the dice coefficient still differs significantly from the original study. 
