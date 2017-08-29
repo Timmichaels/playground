@@ -1,0 +1,47 @@
+cd HW3/betas
+
+3dmask_tool -input ../masks/full_mask.sub-*.HEAD -frac 1.0 -prefix mask_group 
+
+3dinfo -label stats.sub-08_REML+tlrc.BRIK
+
+3dinfo -label2index 'Words#0_Coef' stats.sub-08_REML+tlrc.BRIK
+
+3dttest++ -mask mask_group+tlrc -prefix words-fixation -setA 'stats*_REML+tlrc.HEAD[Words#0_Coef]'
+
+for f in ../blurs/blur_est.sub-*.1D; do 1d_tool.py -infile $f -select_row 3 -write >> blurs.acf.1D done 
+
+1dsum -mean blurs.acf.1D 
+
+3dClustSim \
+-mask mask_group+tlrc \
+-acf 0.8239 4.1996 14.3690 \
+-both \
+-pthr .05 .01 .001 \
+-athr .1 .05 .025 .01 \
+-iter 2000 \
+-prefix cluster \
+-cmd refit.cmd
+
+`cat refit.cmd` words-fixation+tlrc 
+
+3dmerge -1zscore -prefix statz 'stats_masked+tlrc[1]'
+
+3dclust -1Dformat -nosum \
+-prefix clustered \
+-savemask cluster_mask \
+-inmask \
+-1noneg \
+-1clip 3 \
+-dxyz=1 \
+1.74 1 \
+words-fixation+tlrc
+
+
+3dFDR -input group_stats+tlrc[1]  -mask mask_group+tlrc -qval
+
+3dclust -1Dformat -nosum \
+-prefix FDR \
+-savemask FDR_mask \
+-inmask mask_group+tlrc \
+-1noneg \
+zyxt+tlrc
